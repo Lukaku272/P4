@@ -14,6 +14,13 @@ class Main {
           break;
         }
 
+        System.out.print("Podaj nazwisko studenta: ");
+        String nazwisko = scanner.nextLine();
+        if (nazwisko.isBlank()) {
+          System.out.println("Nazwisko nie może być puste.");
+          continue;
+        }
+
         System.out.print("Podaj wiek studenta: ");
         int wiek;
         try {
@@ -23,10 +30,9 @@ class Main {
           continue;
         }
 
-        s.addStudent(new Student(imie, wiek));
+        s.addStudent(new Student(imie, nazwisko, wiek));
       }
 
-      // Pytanie o wyświetlenie
       System.out.print("\nCzy chcesz wyświetlić wszystkich studentów? (tak/nie): ");
       String odpowiedz = scanner.nextLine().trim().toLowerCase();
       if (odpowiedz.equals("tak")) {

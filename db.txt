@@ -1,12 +1,2 @@
-Krzysztof 20
-Janusz 40
-Krzysztof 20
-Janusz 40
-Krzysztof 20
-Janusz 40
-Maciek 30
-Radek 19
-jakub 40
-Kuba 20
-Jacek 30
-kuba 12
+Tymek Wojtoń 22
+kuba jacek 34
