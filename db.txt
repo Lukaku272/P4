@@ -7,3 +7,6 @@ Janusz 40
 Maciek 30
 Radek 19
 jakub 40
+Kuba 20
+Jacek 30
+kuba 12
