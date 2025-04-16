@@ -1,27 +1,39 @@
-/*
-Kod bazowy programu Commit4_0: 
-• Program dodaje do prostej bazy danych (pliku db.txt) dane odnośnie Studentów.
-• Studenci dodawani są w klasie Main.
-• Wszyscy studenci są wypisywani na końcu klasy Main.
-• Klasa Service obsługuje odczyt i zapis do pliku bazy danych.
-• Klasa Student reprezentuje pojedynczego studenta (Imię, Wiek).
-*/
+  import java.io.IOException;
+  import java.util.Scanner;
 
-import java.io.IOException;
+  class Main {
+    public static void main(String[] args) {
+      try {
+        Scanner scanner = new Scanner(System.in);
+        Service s = new Service();
 
-class Main {
-  public static void main(String[] args) {
-    try {
-      Service s = new Service();
-      s.addStudent(new Student("Krzysztof", 20));
-      s.addStudent(new Student("Janusz", 40));
+        while (true) {
+          System.out.print("Podaj imię studenta (lub Enter, aby zakończyć): ");
+          String imie = scanner.nextLine();
+          if (imie.isBlank()) {
+            break;
+          }
 
-      var students = s.getStudents();
-      for(Student current : students) {
-        System.out.println(current.ToString());
+          System.out.print("Podaj wiek studenta: ");
+          int wiek;
+          try {
+            wiek = Integer.parseInt(scanner.nextLine());
+          } catch (NumberFormatException e) {
+            System.out.println("Nieprawidłowy wiek, spróbuj ponownie.");
+            continue;
+          }
+
+          s.addStudent(new Student(imie, wiek));
+        }
+
+        var students = s.getStudents();
+        System.out.println("\nLista studentów:");
+        for (Student current : students) {
+          System.out.println(current.ToString());
+        }
+
+      } catch (IOException e) {
+        System.out.println("Wystąpił błąd podczas operacji na pliku: " + e.getMessage());
       }
-    } catch (IOException e) {
-
     }
   }
-}

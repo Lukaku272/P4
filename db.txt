@@ -4,3 +4,6 @@ Krzysztof 20
 Janusz 40
 Krzysztof 20
 Janusz 40
+Maciek 30
+Radek 19
+jakub 40
