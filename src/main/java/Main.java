@@ -1,7 +1,9 @@
 import java.io.IOException;
 import java.util.Scanner;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
-class Main {
+public class Main {
   public static void main(String[] args) {
     try {
       Scanner scanner = new Scanner(System.in);
@@ -30,7 +32,18 @@ class Main {
           continue;
         }
 
-        s.addStudent(new Student(imie, nazwisko, wiek));
+        String birthDate = null;
+        while (true) {
+          System.out.print("Podaj datę urodzenia studenta (YYYY-MM-DD): ");
+          birthDate = scanner.nextLine().trim();
+          if (isValidDateFormat(birthDate)) {
+            break;
+          } else {
+            System.out.println("Nieprawidłowy format daty. Spróbuj ponownie (format: YYYY-MM-DD).");
+          }
+        }
+
+        s.addStudent(new Student(imie, nazwisko, wiek, birthDate));
       }
 
       System.out.print("\nCzy chcesz wyświetlić wszystkich studentów? (tak/nie): ");
@@ -47,6 +60,17 @@ class Main {
 
     } catch (IOException e) {
       System.out.println("Wystąpił błąd podczas operacji na pliku: " + e.getMessage());
+    }
+  }
+
+  // Funkcja do walidacji formatu daty (YYYY-MM-DD)
+  private static boolean isValidDateFormat(String date) {
+    try {
+      DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+      formatter.parse(date); // Próbujemy sparsować datę
+      return true;
+    } catch (DateTimeParseException e) {
+      return false; // Zwracamy false, jeśli data jest w złym formacie
     }
   }
 }
