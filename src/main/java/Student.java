@@ -1,42 +1,42 @@
 public class Student {
 
-  private String name;
-  private String surname;
-  private int age;
-  private String birthDate;
+  private String imie;
+  private String nazwisko;
+  private int wiek;
+  private String dataUrodzenia;
 
-  public Student(String name, String surname, int age, String birthDate) {
-    this.name = name;
-    this.surname = surname;
-    this.age = age;
-    this.birthDate = birthDate;
+  public Student(String imie, String nazwisko, int wiek, String dataUrodzenia) {
+    this.imie = imie;
+    this.nazwisko = nazwisko;
+    this.wiek = wiek;
+    this.dataUrodzenia = dataUrodzenia;
   }
 
-  public String getName() {
-    return name;
+  public String getImie() {
+    return imie;
   }
 
-  public String getSurname() {
-    return surname;
+  public String getNazwisko() {
+    return nazwisko;
   }
 
-  public int getAge() {
-    return age;
+  public int getWiek() {
+    return wiek;
   }
 
-  public String getBirthDate() {
-    return birthDate;
+  public String getDataUrodzenia() {
+    return dataUrodzenia;
   }
 
-  public String ToString() {
-    return name + " " + surname + " " + age + " " + birthDate;
+  public String toString() {
+    return imie + " " + nazwisko + " " + wiek + " " + dataUrodzenia;
   }
 
-  public static Student Parse(String str) {
-    String[] data = str.split(" ");
-    if (data.length != 4)
+  public static Student parse(String str) {
+    String[] dane = str.split(" ");
+    if (dane.length != 4)
       return new Student("Parse", "Error", -1, "Error");
 
-    return new Student(data[0], data[1], Integer.parseInt(data[2]), data[3]);
+    return new Student(dane[0], dane[1], Integer.parseInt(dane[2]), dane[3]);
   }
 }

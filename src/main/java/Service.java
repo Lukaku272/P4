@@ -8,23 +8,33 @@ import java.util.ArrayList;
 
 public class Service {
 
-  public void addStudent(Student student) throws IOException {
-    var f = new FileWriter("db.txt", true);
-    var b = new BufferedWriter(f);
-    b.append(student.ToString());
-    b.newLine();
-    b.close();
+  public void dodajStudenta(Student student) throws IOException {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter("db.txt", true))) {
+      writer.append(student.toString());
+      writer.newLine();
+    }
   }
 
-  public Collection<Student> getStudents() throws IOException {
-    var ret = new ArrayList<Student>();
-    var f = new FileReader("db.txt");
-    var reader = new BufferedReader(f);
-    String line = "";
-    while ((line = reader.readLine()) != null) {
-      ret.add(Student.Parse(line));
+  public Collection<Student> pobierzStudentów() throws IOException {
+    Collection<Student> studenci = new ArrayList<>();
+    try (BufferedReader reader = new BufferedReader(new FileReader("db.txt"))) {
+      String linia;
+      while ((linia = reader.readLine()) != null) {
+        studenci.add(Student.parse(linia));
+      }
     }
-    reader.close();
-    return ret;
+    return studenci;
+  }
+
+  public Student znajdźStudentaPoImieniu(String imię) throws IOException {
+    Collection<Student> studenci = pobierzStudentów();
+
+    for (Student student : studenci) {
+      if (student.getImie().equalsIgnoreCase(imię)) {
+        return student;
+      }
+    }
+
+    return null;
   }
 }

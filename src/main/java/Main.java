@@ -10,7 +10,7 @@ public class Main {
       Service s = new Service();
 
       while (true) {
-        System.out.print("Podaj imię studenta (lub Enter, aby zakończyć): ");
+        System.out.print("Podaj imię studenta (lub naciśnij Enter, aby zakończyć): ");
         String imie = scanner.nextLine();
         if (imie.isBlank()) {
           break;
@@ -32,30 +32,35 @@ public class Main {
           continue;
         }
 
-        String birthDate = null;
+        System.out.print("Podaj datę urodzenia studenta (YYYY-MM-DD): ");
+        String dataUrodzenia = null;
         while (true) {
-          System.out.print("Podaj datę urodzenia studenta (YYYY-MM-DD): ");
-          birthDate = scanner.nextLine().trim();
-          if (isValidDateFormat(birthDate)) {
+          dataUrodzenia = scanner.nextLine().trim();
+          if (isValidDateFormat(dataUrodzenia)) {
             break;
           } else {
             System.out.println("Nieprawidłowy format daty. Spróbuj ponownie (format: YYYY-MM-DD).");
           }
         }
 
-        s.addStudent(new Student(imie, nazwisko, wiek, birthDate));
+        s.dodajStudenta(new Student(imie, nazwisko, wiek, dataUrodzenia));
       }
 
-      System.out.print("\nCzy chcesz wyświetlić wszystkich studentów? (tak/nie): ");
+      System.out.print("\nCzy chcesz wyszukać studenta po imieniu? (tak/nie): ");
       String odpowiedz = scanner.nextLine().trim().toLowerCase();
+
       if (odpowiedz.equals("tak")) {
-        var students = s.getStudents();
-        System.out.println("\nLista studentów:");
-        for (Student current : students) {
-          System.out.println(current.ToString());
+        System.out.print("Podaj imię studenta, którego chcesz znaleźć: ");
+        String searchName = scanner.nextLine().trim();
+        Student foundStudent = s.znajdźStudentaPoImieniu(searchName);
+
+        if (foundStudent != null) {
+          System.out.println("Znaleziono studenta: " + foundStudent.toString());
+        } else {
+          System.out.println("Student o imieniu " + searchName + " nie został znaleziony.");
         }
       } else {
-        System.out.println("Zakończono bez wyświetlania studentów.");
+        System.out.println("Zakończono bez wyszukiwania studenta.");
       }
 
     } catch (IOException e) {
@@ -63,14 +68,13 @@ public class Main {
     }
   }
 
-  // Funkcja do walidacji formatu daty (YYYY-MM-DD)
   private static boolean isValidDateFormat(String date) {
     try {
       DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
-      formatter.parse(date); // Próbujemy sparsować datę
+      formatter.parse(date);
       return true;
     } catch (DateTimeParseException e) {
-      return false; // Zwracamy false, jeśli data jest w złym formacie
+      return false;
     }
   }
 }
