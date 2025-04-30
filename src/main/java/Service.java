@@ -37,4 +37,29 @@ public class Service {
 
     return null;
   }
+
+  public boolean usunStudenta(String imie, String nazwisko) throws IOException {
+    Collection<Student> studenci = pobierzStudentów();
+    Collection<Student> studenciPozostali = new ArrayList<>();
+
+    boolean usunieto = false;
+    for (Student student : studenci) {
+      if (student.getImie().equalsIgnoreCase(imie) && student.getNazwisko().equalsIgnoreCase(nazwisko)) {
+        usunieto = true;
+      } else {
+        studenciPozostali.add(student);
+      }
+    }
+
+    if (usunieto) {
+      try (BufferedWriter writer = new BufferedWriter(new FileWriter("db.txt"))) {
+        for (Student student : studenciPozostali) {
+          writer.append(student.toString());
+          writer.newLine();
+        }
+      }
+    }
+
+    return usunieto;
+  }
 }
